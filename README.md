@@ -16,3 +16,73 @@ The React Compiler is not enabled on this template because of its impact on dev 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
 # HR-ai-memo-app
+
+```
+hr-ai-memo-app
+├─ README.md
+├─ eslint.config.js
+├─ index.html
+├─ package-lock.json
+├─ package.json
+├─ public
+│  └─ vite.svg
+├─ src
+│  ├─ App.css
+│  ├─ App.jsx
+│  ├─ assets
+│  │  └─ react.svg
+│  ├─ components
+│  ├─ index.css
+│  ├─ layouts
+│  │  └─ RootLayout.jsx
+│  ├─ main.jsx
+│  ├─ pages
+│  │  ├─ CreateMemo.jsx
+│  │  ├─ Home.jsx
+│  │  ├─ Login.jsx
+│  │  ├─ MemoList.jsx
+│  │  ├─ Profile.jsx
+│  │  └─ Signup.jsx
+│  ├─ router
+│  │  └─ index.js
+│  └─ utils
+│     └─ genai.js
+└─ vite.config.js
+
+```
+```
+hr-ai-memo-app
+├─ README.md
+├─ eslint.config.js
+├─ index.html
+├─ package-lock.json
+├─ package.json
+├─ public
+│  └─ vite.svg
+├─ src
+│  ├─ App.css
+│  ├─ App.jsx
+│  ├─ assets
+│  │  └─ react.svg
+│  ├─ components
+│  │  ├─ ChatForm.jsx
+│  │  ├─ ChatMessage.jsx
+│  │  └─ MessageList.jsx
+│  ├─ index.css
+│  ├─ layouts
+│  │  └─ RootLayout.jsx
+│  ├─ main.jsx
+│  ├─ pages
+│  │  ├─ CreateMemo.jsx
+│  │  ├─ Home.jsx
+│  │  ├─ Login.jsx
+│  │  ├─ MemoList.jsx
+│  │  ├─ Profile.jsx
+│  │  └─ Signup.jsx
+│  ├─ router
+│  │  └─ index.js
+│  └─ utils
+│     └─ genai.js
+└─ vite.config.js
+
+```
