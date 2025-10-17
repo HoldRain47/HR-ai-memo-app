@@ -53,7 +53,7 @@ export default function CreateMemo() {
       } else {
         setMessages((prev) => [
           ...prev,
-          { role: "ai", content: "할 일 관련 내용이 아닙니다." },
+          { role: "ai", content: "요청사항을 수행할 수 없습니다." },
         ]);
       }
     } catch (error) {
