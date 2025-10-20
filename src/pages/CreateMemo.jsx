@@ -56,19 +56,19 @@ export default function CreateMemo() {
         // 화면에도 표시
         setMessages((prev) => [
           ...prev,
-          { role: "ai", content: `✅ 메모가 생성되었습니다: ${data.content}` },
+          { role: "ai", content: ` 메모가 생성되었습니다: ${data.content}` },
         ]);
       } else {
         setMessages((prev) => [
           ...prev,
-          { role: "ai", content: "❌ 할 일 관련 내용이 아닙니다." },
+          { role: "ai", content: " 할 일 관련 내용이 아닙니다." },
         ]);
       }
     } catch (error) {
       console.error(error);
       setMessages((prev) => [
         ...prev,
-        { role: "ai", content: "⚠️ 오류가 발생했습니다. 다시 시도해주세요." },
+        { role: "ai", content: " 오류가 발생했습니다. 다시 시도해주세요." },
       ]);
     }
   }
