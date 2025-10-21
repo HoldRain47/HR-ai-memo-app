@@ -1,21 +1,26 @@
-# React + Vite
+# 개요
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 기술 스택
 
-Currently, two official plugins are available:
+React + React Router v7
+Redux Toolkit + Redux Persist
+Tailwind CSS
+Supabase Auth
+Google Gemini API
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 주요 기능
 
-## React Compiler
+1. 자연어로 입력한 내용을 AI가 분석해 메모 생성
+2. Supabase 기반 회원가입 및 로그인
+3. Redux Toolkit과 Persist로 전역 상태 및 세션 유지
+4. Supabase에 사용자 별 메모 저장 및 관리
+5. 메모 완료/미완료 상태 변경 및 삭제
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 프로젝트 실행 방법
 
-## Expanding the ESLint configuration
+## 기타
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-# HR-ai-memo-app
+## HR-ai-memo-app
 
 ```
 hr-ai-memo-app
@@ -37,6 +42,7 @@ hr-ai-memo-app
 │  │  └─ MessageList.jsx
 │  ├─ index.css
 │  ├─ layouts
+│  │  ├─ ProtectedRoute.jsx
 │  │  └─ RootLayout.jsx
 │  ├─ main.jsx
 │  ├─ pages
@@ -52,7 +58,8 @@ hr-ai-memo-app
 │  │  ├─ authSlice.js
 │  │  └─ index.js
 │  └─ utils
-│     └─ genai.js
+│     ├─ genai.js
+│     └─ memoApi.js
 └─ vite.config.js
 
 ```

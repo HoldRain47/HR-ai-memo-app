@@ -39,7 +39,7 @@ const router = createBrowserRouter([
         Component: Signup,
       },
       {
-        path: "Profile",
+        path: "profile",
         Component: Profile,
       },
     ],

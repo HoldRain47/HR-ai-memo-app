@@ -9,7 +9,7 @@ export default function ChatForm({ prompt, setPrompt, onSubmit, isLoading }) {
           isLoading ? "답변을 생성하고 있습니다..." : "메시지를 입력하세요..."
         }
         disabled={isLoading}
-        className="flex-grow-1 px-3 py-2 border border-gray-300 "
+        className="flex-grow px-3 py-2 border border-gray-300 "
       />
       <input
         type="submit"
