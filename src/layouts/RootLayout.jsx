@@ -7,11 +7,11 @@ export default function RootLayout() {
         <div className="flex gap-4 text-blue-600 font-semibold">
           <Link to="/">HR AI MEMO APP</Link>
           <Link to="/create-memo">메모 작성</Link>
-          <Link to="/meomo-list">메모 목록</Link>
+          <Link to="/memo-list">메모 목록</Link>
         </div>
         <div className="flex gap-4 text-blue-600 font-semibold">
           <Link to="/login">로그인</Link>
-          <Link to="/singup">회원 가입</Link>
+          <Link to="/signup">회원 가입</Link>
         </div>
       </nav>
       <hr className="w-screen border-t border-gray-300 -mx-6 mb-6" />

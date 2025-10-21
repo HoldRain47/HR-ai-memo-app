@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         Component: CreateMemo,
       },
       {
-        path: "meomo-list",
+        path: "memo-list",
         Component: MemoList,
       },
       //import MemoDetail from "../pages/PostDetail";
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         Component: Login,
       },
       {
-        path: "singup",
+        path: "signup",
         Component: Signup,
       },
     ],

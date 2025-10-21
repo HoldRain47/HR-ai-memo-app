@@ -32,39 +32,6 @@ hr-ai-memo-app
 │  ├─ assets
 │  │  └─ react.svg
 │  ├─ components
-│  ├─ index.css
-│  ├─ layouts
-│  │  └─ RootLayout.jsx
-│  ├─ main.jsx
-│  ├─ pages
-│  │  ├─ CreateMemo.jsx
-│  │  ├─ Home.jsx
-│  │  ├─ Login.jsx
-│  │  ├─ MemoList.jsx
-│  │  ├─ Profile.jsx
-│  │  └─ Signup.jsx
-│  ├─ router
-│  │  └─ index.js
-│  └─ utils
-│     └─ genai.js
-└─ vite.config.js
-
-```
-```
-hr-ai-memo-app
-├─ README.md
-├─ eslint.config.js
-├─ index.html
-├─ package-lock.json
-├─ package.json
-├─ public
-│  └─ vite.svg
-├─ src
-│  ├─ App.css
-│  ├─ App.jsx
-│  ├─ assets
-│  │  └─ react.svg
-│  ├─ components
 │  │  ├─ ChatForm.jsx
 │  │  ├─ ChatMessage.jsx
 │  │  └─ MessageList.jsx
@@ -80,6 +47,9 @@ hr-ai-memo-app
 │  │  ├─ Profile.jsx
 │  │  └─ Signup.jsx
 │  ├─ router
+│  │  └─ index.js
+│  ├─ store
+│  │  ├─ authSlice.js
 │  │  └─ index.js
 │  └─ utils
 │     └─ genai.js
