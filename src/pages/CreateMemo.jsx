@@ -2,6 +2,9 @@ import { useState } from "react";
 import MessageList from "../components/MessageList";
 import ChatForm from "../components/ChatForm";
 import { ai, config } from "../utils/genai";
+// import 추가
+import { useSelector } from "react-redux";
+import { addMemo } from "../utils/memoApi";
 
 export default function CreateMemo() {
   const [prompt, setPrompt] = useState("");
@@ -34,8 +37,8 @@ export default function CreateMemo() {
           topic: data.topic || "일반",
           content: data.content || "내용 없음",
           time: data.time || "시간 미정",
-          isCompleted: false,
-          createdAt: new Date().toISOString().split("T")[0],
+          is_completed: false,
+          created_at: new Date().toISOString().split("T")[0],
         };
 
         setPendingMemo(newMemo);
@@ -70,17 +73,44 @@ export default function CreateMemo() {
     }
   }
 
-  function handleConfirm(isYes) {
-    if (isYes && pendingMemo) {
-      const stored = localStorage.getItem("memos");
-      const memoList = stored ? JSON.parse(stored) : [];
-      const updated = [...memoList, pendingMemo];
-      localStorage.setItem("memos", JSON.stringify(updated));
+  // function handleConfirm(isYes) {
+  //   if (isYes && pendingMemo) {
+  //     const stored = localStorage.getItem("memos");
+  //     const memoList = stored ? JSON.parse(stored) : [];
+  //     const updated = [...memoList, pendingMemo];
+  //     localStorage.setItem("memos", JSON.stringify(updated));
 
-      setMessages((prev) => [
-        ...prev,
-        { role: "ai", content: "메모가 생성되었습니다." },
-      ]);
+  //     setMessages((prev) => [
+  //       ...prev,
+  //       { role: "ai", content: "메모가 생성되었습니다." },
+  //     ]);
+  //   } else {
+  //     setMessages((prev) => [
+  //       ...prev,
+  //       { role: "ai", content: "메모 생성을 취소했습니다." },
+  //     ]);
+  //   }
+
+  //   setPendingMemo(null);
+  //   setMessages((prev) => prev.map((msg) => ({ ...msg, showButtons: false })));
+  // }
+  const { token } = useSelector((state) => state.auth);
+  async function handleConfirm(isYes) {
+    if (isYes && pendingMemo) {
+      try {
+        const userId = JSON.parse(atob(token.split(".")[1]))["sub"]; // JWT에서 userId 추출
+        await addMemo(userId, pendingMemo);
+        setMessages((prev) => [
+          ...prev,
+          { role: "ai", content: "메모가 저장되었습니다." },
+        ]);
+      } catch (err) {
+        console.error(err);
+        setMessages((prev) => [
+          ...prev,
+          { role: "ai", content: "메모 저장 중 오류가 발생했습니다." },
+        ]);
+      }
     } else {
       setMessages((prev) => [
         ...prev,
@@ -129,13 +159,13 @@ export default function CreateMemo() {
               <div className="mt-2 flex gap-3">
                 <button
                   onClick={() => handleConfirm(true)}
-                  className="px-4 py-1 bg-green-500 text-white rounded-md hover:bg-green-600"
+                  className="px-4 py-1 bg-green-200 text-white rounded-md hover:bg-green-400"
                 >
                   Y
                 </button>
                 <button
                   onClick={() => handleConfirm(false)}
-                  className="px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+                  className="px-4 py-1 bg-red-200 text-white rounded-md hover:bg-red-400"
                 >
                   N
                 </button>

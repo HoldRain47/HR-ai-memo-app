@@ -7,6 +7,8 @@ import Signup from "../pages/Signup";
 import MemoList from "../pages/MemoList";
 import CreateMemo from "../pages/CreateMemo";
 import Profile from "../pages/Profile";
+import ProtectedRoute from "../layouts/ProtectedRoute"; //보호라우터
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,12 +19,11 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "create-memo",
-        Component: CreateMemo,
-      },
-      {
-        path: "memo-list",
-        Component: MemoList,
+        Component: ProtectedRoute,
+        children: [
+          { path: "create-memo", Component: CreateMemo },
+          { path: "memo-list", Component: MemoList },
+        ],
       },
       //import MemoDetail from "../pages/PostDetail";
       // { 로그인 한 사용자의 메모를 보기위한 페이지

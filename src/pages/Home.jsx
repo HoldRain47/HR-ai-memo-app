@@ -20,7 +20,7 @@ export default function Home() {
           <li>자연어로 입력한 내용을 AI가 분석해 메모 생성</li>
           <li>Supabase 기반 회원가입 및 로그인</li>
           <li>Redux Toolkit과 Persist로 전역 상태 및 세션 유지</li>
-          <li>로컬 스토리지에 메모 저장 및 관리</li>
+          <li>Supabase에 사용자 별 메모 저장 및 관리</li>
           <li>메모 완료/미완료 상태 변경 및 삭제</li>
         </ul>
       </div>

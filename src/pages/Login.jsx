@@ -19,7 +19,12 @@ export default function Login() {
       alert("로그인 성공!");
       navigate("/");
     } else {
-      alert(result.payload?.msg || "로그인 실패.");
+      const supabaseMsg = result.payload?.msg;
+      const message =
+        supabaseMsg === "Invalid login credentials"
+          ? "이메일 또는 비밀번호가 올바르지 않습니다."
+          : "로그인 실패. 다시 시도해주세요.";
+      alert(message);
     }
   };
 
