@@ -1,35 +1,113 @@
 // src/store/authSlice.js
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+// 환경변수
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// 회원가입
+export const signup = createAsyncThunk(
+  "auth/signup",
+  async (data, { rejectWithValue }) => {
+    try {
+      const config = {
+        url: `${SUPABASE_URL}/auth/v1/signup`,
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          apikey: SUPABASE_ANON_KEY,
+        },
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+      };
+      const response = await axios(config);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// 로그인
+export const login = createAsyncThunk(
+  "auth/login",
+  async (data, { rejectWithValue }) => {
+    try {
+      const config = {
+        url: `${SUPABASE_URL}/auth/v1/token?grant_type=password`,
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          apikey: SUPABASE_ANON_KEY,
+        },
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+      };
+      const response = await axios(config);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// 로그아웃
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { rejectWithValue, getState }) => {
+    try {
+      const config = {
+        url: `${SUPABASE_URL}/auth/v1/logout`,
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      };
+      const response = await axios(config);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const initialState = {
-  token: localStorage.getItem("token") || null,
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  token: null,
+  error: null,
+  isSignup: false,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // 로그인 성공 시 실행
-    loginSuccess: (state, action) => {
-      const { token, user } = action.payload;
-      state.token = token;
-      state.user = user;
-
-      // 로컬스토리지에 저장
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+    resetIsSignup: (state) => {
+      state.isSignup = false;
     },
-    // 로그아웃 시 실행
-    logout: (state) => {
-      state.token = null;
-      state.user = null;
-
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signup.fulfilled, (state) => {
+        state.isSignup = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.token = action.payload.access_token;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.token = null;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.error = action.payload;
+      });
   },
 });
 
-export const { loginSuccess, logout } = authSlice.actions;
+export const { resetIsSignup } = authSlice.actions;
 export default authSlice.reducer;

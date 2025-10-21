@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import MemoList from "../pages/MemoList";
 import CreateMemo from "../pages/CreateMemo";
+import Profile from "../pages/Profile";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "signup",
         Component: Signup,
+      },
+      {
+        path: "Profile",
+        Component: Profile,
       },
     ],
   },

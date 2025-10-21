@@ -3,15 +3,14 @@ import { logout } from "../store/authSlice";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const { user, token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
 
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold">프로필 페이지</h2>
       {token ? (
         <>
-          <p className="mt-4">현재 로그인된 사용자: {user.email}</p>
-          <p className="text-sm text-gray-500">토큰: {token}</p>
+          <p className="mt-4">현재 로그인 중입니다.</p>
           <button
             className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
             onClick={() => dispatch(logout())}

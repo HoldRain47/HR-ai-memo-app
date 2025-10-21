@@ -1,33 +1,25 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isSignup, error } = useSelector((state) => state.auth);
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
+    const result = await dispatch(signup({ email, password }));
 
-    // 기존 사용자 목록 가져오기 (없으면 빈 배열)
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    // 이미 존재하는 이메일인지 확인
-    const userExists = existingUsers.some((user) => user.email === email);
-    if (userExists) {
-      alert("이미 가입된 이메일입니다.");
-      return;
+    if (signup.fulfilled.match(result)) {
+      alert("회원가입 완료! 이메일을 확인하세요.");
+      navigate("/login");
+    } else {
+      alert(result.payload?.msg || "회원가입 실패");
     }
-
-    // 새 사용자 추가
-    const newUser = { email, password };
-    existingUsers.push(newUser);
-
-    // 로컬스토리지에 저장
-    localStorage.setItem("users", JSON.stringify(existingUsers));
-
-    alert("회원가입이 완료되었습니다! 로그인 페이지로 이동합니다.");
-    navigate("/login");
   };
 
   return (
@@ -54,6 +46,7 @@ export default function Signup() {
           회원가입
         </button>
       </form>
+      {error && <p className="text-red-500 mt-2">{error.msg}</p>}
     </div>
   );
 }

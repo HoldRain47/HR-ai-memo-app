@@ -12,6 +12,7 @@ export default function RootLayout() {
         <div className="flex gap-4 text-blue-600 font-semibold">
           <Link to="/login">로그인</Link>
           <Link to="/signup">회원 가입</Link>
+          <Link to="/profile">프로필</Link>
         </div>
       </nav>
       <hr className="w-screen border-t border-gray-300 -mx-6 mb-6" />

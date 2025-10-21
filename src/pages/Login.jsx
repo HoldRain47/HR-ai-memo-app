@@ -1,6 +1,7 @@
+// src/pages/Login.jsx
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -8,25 +9,18 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token, error } = useSelector((state) => state.auth);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    const result = await dispatch(login({ email, password }));
 
-    // 로컬 회원 목록 불러오기
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const foundUser = users.find(
-      (user) => user.email === email && user.password === password
-    );
-
-    if (!foundUser) {
-      alert("이메일 또는 비밀번호가 잘못되었습니다.");
-      return;
+    if (login.fulfilled.match(result)) {
+      alert("로그인 성공!");
+      navigate("/");
+    } else {
+      alert(result.payload?.msg || "로그인 실패.");
     }
-
-    // 로그인 성공 처리
-    const fakeToken = "local-token-" + Date.now();
-    dispatch(loginSuccess({ token: fakeToken, user: foundUser }));
-    navigate("/");
   };
 
   return (
@@ -53,6 +47,7 @@ export default function Login() {
           로그인
         </button>
       </form>
+      {error && <p className="text-red-500 mt-2">{error.msg}</p>}
     </div>
   );
 }
