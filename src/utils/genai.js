@@ -24,12 +24,16 @@ const responseSchema = {
       type: "string",
       description: "할 일 내용(본문)",
     },
-    dueDate: {
+    time: {
       type: "string",
-      description: "할 일 마감 기한(YYYY-MM-DD)",
+      description: "진행할 시간(예: 오전 10시, 오후 3시 등)",
+    },
+    topic: {
+      type: "string",
+      description: "주제(AI가 선정)",
     },
   },
-  required: ["isMemo", "content", "dueDate"],
+  required: ["isMemo", "content", "time", "topic"],
   additionalProperties: false,
 };
 
@@ -46,11 +50,13 @@ const responseSchema = {
 
 const systemInstruction = [
   `오늘 날짜: ${new Date().toISOString().split("T")[0]}`,
-  "당신은 할 일 관리 AI입니다. 오직 할 일이나 업무 관련 내용만 처리합니다.",
-  "JSON 형식으로 응답합니다.",
-  "할 일이 아닌 일반적인 대화, 인사, 질문은 무시하고, isMemo를 false로 설정합니다.",
-  "사용자의 질문을 이해할 수 없는 경우에는 isMemo를 false로 설정합니다.",
-  "응답할 때는 할 일 내용, 마감 날짜, 우선 순위, 할 일 종류를 포함한 객체를 생성합니다.",
+  "당신은 할 일 관리 AI입니다. 사용자의 자연어 입력을 분석하여 JSON으로만 응답합니다.",
+  "JSON에는 반드시 다음 속성이 포함되어야 합니다: isMemo, content, time, topic.",
+  "topic은 입력 내용을 요약하거나 관련 주제를 한글로 생성합니다.",
+  "예시: { isMemo: true, content: '헬스장 가기', time: '오전 7시', topic: '운동' }",
+  "사용자의 입력이 메모, 업무, 일정과 관련이 없으면 isMemo를 false로 설정합니다.",
+  "time에는 실제 진행할 시간(예: 오전 9시, 오후 1시)을 포함합니다.",
+  "topic이 비어 있거나 판단할 수 없는 경우, '일반'이라는 기본 주제를 사용합니다.",
 ];
 
 const config = {

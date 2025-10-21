@@ -10,7 +10,7 @@ export default function ChatMessage({ message }) {
       {isAi ? (
         <div className="markdown-content max-w-[90%]">
           {/* AI 채팅 내역이면 마크다운 컴포넌트 적용 */}
-          {/* 마크다운 문법 스타일리은 index.css에 정의 */}
+          {/* 마크다운 문법 스타일은 index.css에 정의 */}
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {message.content}
           </ReactMarkdown>

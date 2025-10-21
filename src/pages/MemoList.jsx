@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 export default function MemoList() {
   const [memos, setMemos] = useState([]);
-  const [filter, setFilter] = useState("all"); // all, completed, incomplete
-  const [sortBy, setSortBy] = useState("createdAt"); // createdAt, dueDate
+  const [filter, setFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("createdAt");
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState("");
 
-  // 로컬스토리지에서 불러오기
+  // 로컬스토리지에서 메모 불러오기
   useEffect(() => {
     const stored = localStorage.getItem("memos");
     if (stored) {
@@ -15,13 +15,11 @@ export default function MemoList() {
     }
   }, []);
 
-  // 로컬스토리지 업데이트 함수
   function updateLocalStorage(updated) {
     setMemos(updated);
     localStorage.setItem("memos", JSON.stringify(updated));
   }
 
-  // 완료 상태 변경
   function toggleComplete(id) {
     const updated = memos.map((memo) =>
       memo.id === id ? { ...memo, isCompleted: !memo.isCompleted } : memo
@@ -29,39 +27,34 @@ export default function MemoList() {
     updateLocalStorage(updated);
   }
 
-  // 메모 삭제
   function deleteMemo(id) {
     const updated = memos.filter((memo) => memo.id !== id);
     updateLocalStorage(updated);
   }
 
-  // 수정 모드 진입
   function startEdit(id, currentText) {
     setEditId(id);
     setEditText(currentText);
   }
 
-  // 수정 완료
   function saveEdit(id) {
     const updated = memos.map((memo) =>
-      memo.id === id ? { ...memo, content: editText, title: editText } : memo
+      memo.id === id ? { ...memo, content: editText } : memo
     );
     updateLocalStorage(updated);
     setEditId(null);
     setEditText("");
   }
 
-  // 필터링 적용
   const filteredMemos = memos.filter((memo) => {
     if (filter === "completed") return memo.isCompleted;
     if (filter === "incomplete") return !memo.isCompleted;
     return true;
   });
 
-  // 정렬 적용
   const sortedMemos = [...filteredMemos].sort((a, b) => {
-    if (sortBy === "dueDate") {
-      return new Date(a.dueDate || 0) - new Date(b.dueDate || 0);
+    if (sortBy === "time") {
+      return (a.time || "").localeCompare(b.time || "");
     } else {
       return new Date(b.createdAt) - new Date(a.createdAt);
     }
@@ -71,7 +64,7 @@ export default function MemoList() {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">📝 내 메모 목록</h2>
 
-      {/* 필터 및 정렬 메뉴 */}
+      {/* 필터 및 정렬 */}
       <div className="flex gap-3 mb-4">
         <button
           onClick={() => setFilter("all")}
@@ -104,10 +97,11 @@ export default function MemoList() {
           className="border rounded-md px-2"
         >
           <option value="createdAt">작성일순</option>
-          <option value="dueDate">마감일순</option>
+          <option value="time">시간순</option>
         </select>
       </div>
 
+      {/* 메모 목록 */}
       {sortedMemos.length === 0 ? (
         <p className="text-gray-500">표시할 메모가 없습니다.</p>
       ) : (
@@ -140,16 +134,28 @@ export default function MemoList() {
               </>
             ) : (
               <>
+                {/* 본문*/}
                 <h3
                   className={`font-semibold text-lg ${
                     memo.isCompleted ? "line-through text-gray-500" : ""
                   }`}
                 >
-                  {memo.title}
+                  할 일: {memo.content}
                 </h3>
-                <p className="text-sm text-gray-700 mt-1">{memo.content}</p>
-                <p className="text-sm text-gray-500 mt-2">
-                  마감일: {memo.dueDate || "없음"} / 작성일: {memo.createdAt}
+
+                {/* 주제*/}
+                <p className="text-sm text-gray-700 mt-1">
+                  주제: {memo.topic || "일반"}
+                </p>
+
+                {/* 진행 시간 */}
+                <p className="text-sm text-gray-600 mt-1">
+                  진행 시간: {memo.time || "없음"}
+                </p>
+
+                {/* 작성일 */}
+                <p className="text-xs text-gray-400 mt-1">
+                  작성일: {memo.createdAt}
                 </p>
 
                 <div className="flex gap-2 mt-3">
@@ -159,12 +165,13 @@ export default function MemoList() {
                   >
                     {memo.isCompleted ? "미완료" : "완료"}
                   </button>
-                  <button
+                  {/* 수정 로직은 아직 대기 */}
+                  {/* <button
                     onClick={() => startEdit(memo.id, memo.content)}
                     className="px-3 py-1 border rounded-md text-sm hover:bg-blue-100 text-blue-600"
                   >
                     수정
-                  </button>
+                  </button> */}
                   <button
                     onClick={() => deleteMemo(memo.id)}
                     className="px-3 py-1 border rounded-md text-sm hover:bg-red-100 text-red-600"

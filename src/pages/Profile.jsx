@@ -10,7 +10,7 @@ export default function Profile() {
       <h2 className="text-2xl font-bold">프로필 페이지</h2>
       {token ? (
         <>
-          <p className="mt-4">현재 로그인 중입니다.</p>
+          <p className="mt-4">현재 상태 :로그인.</p>
           <button
             className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
             onClick={() => dispatch(logout())}
@@ -19,7 +19,7 @@ export default function Profile() {
           </button>
         </>
       ) : (
-        <p>로그인 정보가 없습니다.</p>
+        <p>현재 상태 : 로그아웃.</p>
       )}
     </div>
   );
