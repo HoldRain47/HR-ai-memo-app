@@ -2,11 +2,11 @@
 
 ## 기술 스택
 
-React + React Router v7
-Redux Toolkit + Redux Persist
-Tailwind CSS
-Supabase Auth
-Google Gemini API
+> React + React Router v7
+> Redux Toolkit + Redux Persist
+> Tailwind CSS
+> Supabase Auth
+> Google Gemini API
 
 ## 주요 기능
 
